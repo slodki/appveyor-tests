@@ -1,0 +1,81 @@
+version: '{build}'
+image:
+- Previous Visual Studio 2013
+- Visual Studio 2013
+- Previous Visual Studio 2015
+- Visual Studio 2015
+- Previous Visual Studio 2017
+- Visual Studio 2017
+platform:
+- x64
+- Win32
+configuration: Release
+
+environment:
+  # wxWidgets config
+  wxVer: 3.1.0
+  wxwin: C:\wxWidgets
+  wxShared: 1
+  wxURL: https://github.com/wxWidgets/wxWidgets/releases/download/v$(wxver)
+  matrix:
+  - image: Previous Visual Studio 2013
+    comp: 120
+  - image: Visual Studio 2013
+    comp: 120
+  - image: Previous Visual Studio 2015
+    comp: 140
+  - image: Visual Studio 2015
+    comp: 140
+  - image: Previous Visual Studio 2017
+    comp: 140
+  - image: Visual Studio 2017
+    comp: 140
+
+init:
+- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
+# Set MSVS environment
+- if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
+- if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
+- if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
+- if %comp%==141  call "%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" %arch%
+- if %comp%==140 (call "%VS140COMNTOOLS%VsDevCmd.bat" & call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
+- if %comp%==120 (call "%VS120COMNTOOLS%VsDevCmd.bat" & call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
+- if %comp%==110 (call "%VS110COMNTOOLS%VsDevCmd.bat" & call "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
+- if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+- if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
+# Set wxWidgets library paths
+- set "wxLibFolder=%wxwin%\lib\vc%comp%"
+- if %platform:~-2%==64 set wxSuff=_x64
+- set "wxLibFolder=%wxLibFolder%%wxSuff%_dll"
+# info
+- where cmake & cmake --version
+
+install:
+# wxWidgets, build script from build/tools/msvs/officialbuild.bat
+- if %wxShared%==1 (
+    curl -fsSL --fail-early
+      -O %wxURL%/wxMSW-%wxVer%_vc%comp%%xp%%wxSuff%_Dev.7z
+      -O %wxURL%/wxWidgets-%wxVer%-headers.7z &&
+    if %configuration%==Release curl -fsSL -O %wxURL%/wxMSW-%wxVer%_vc%comp%%xp%%wxSuff%_ReleaseDLL.7z
+  ) || echo Precombiled wxWidgets binaries not found
+- if not exist wxMSW-%wxVer%_vc%comp%%xp%%wxSuff%_Dev.7z curl -fsSL -O %wxURL%/wxWidgets-%wxVer%.7z
+- 7z x -y "-o%wxwin%" wx*-%wxVer%*.7z
+- if %configuration%==Release set "wxConf=BUILD=release"
+- if not %platform:~-2%==64 set "wxFlags=CPPFLAGS=/arch:SSE CFLAGS=/arch:SSE"
+- if not exist "%wxLibFolder%" (
+    echo Building wxWidgets %wxVer% &
+    cd %wxwin%\build\msw &&
+    nmake /nologo /s /f makefile.vc %wxConf% COMPILER_VERSION=%comp% TARGET_CPU=%platform% DEBUG_INFO=default SHARED=%wxShared% %wxFlags%
+  )
+
+build_script:
+- cd %APPVEYOR_BUILD_FOLDER%
+- mkdir build & cd build
+- if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2013" set "gen=12 2013"
+- if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2015" set "gen=14 2015"
+- if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2017" set "gen=15 2017"
+- if %platform:~-2%==64 set "gen=%gen% Win64"
+- cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
+
+test: off
