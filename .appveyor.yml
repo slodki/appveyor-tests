@@ -63,7 +63,6 @@ install:
     curl -fsSL --fail-early
       -O %wxURL%/wxMSW-%wxVer%_vc%comp%%xp%%wxSuff%_Dev.7z
       -O %wxURL%/wxWidgets-%wxVer%-headers.7z &&
-    if %configuration%==Release curl -fsSL -O %wxURL%/wxMSW-%wxVer%_vc%comp%%xp%%wxSuff%_ReleaseDLL.7z
   ) || exit 0
 - if not exist wxMSW-%wxVer%_vc%comp%%xp%%wxSuff%_Dev.7z curl -fsSL -O %wxURL%/wxWidgets-%wxVer%.7z
 - 7z x -y "-o%wxwin%" wx*-%wxVer%*.7z
