@@ -67,8 +67,8 @@ init:
 
 install:
 - dir /w /s "%ProgramFiles(x86)%\CMake"
-- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" --verbose < FindwxWidgets-SupportMSVS1911.patch
-- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" --verbose < FindwxWidgets-SupportMSVS1911.patch
+- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" --verbose < FindwxWidgets-SupportMSVC1911.patch
+- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" --verbose < FindwxWidgets-SupportMSVC1911.patch
 # wxWidgets, build script from build/tools/msvs/officialbuild.bat
 - if %wxShared%==1 (
     curl -fsSL --fail-early
