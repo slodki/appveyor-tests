@@ -18,18 +18,24 @@ environment:
   wxShared: 1
   wxURL: https://github.com/wxWidgets/wxWidgets/releases/download/v$(wxver)
   matrix:
-  - image: Previous Visual Studio 2013
-    comp: 120
-  - image: Visual Studio 2013
-    comp: 120
-  - image: Previous Visual Studio 2015
-    comp: 140
-  - image: Visual Studio 2015
-    comp: 140
-  - image: Previous Visual Studio 2017
-    comp: 140
-  - image: Visual Studio 2017
-    comp: 140
+  - comp: 120
+  - comp: 140
+
+matrix:
+  exclude:
+  - comp: 140
+    image: Visual Studio 2013
+  - comp: 140
+    image: Previous Visual Studio 2013
+  - comp: 120
+    image: Visual Studio 2015
+  - comp: 120
+    image: Previous Visual Studio 2015
+  - comp: 120
+    image: Visual Studio 2017
+  - comp: 120
+    image: Previous Visual Studio 2017
+
 
 init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
