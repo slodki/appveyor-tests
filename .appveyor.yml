@@ -1,10 +1,10 @@
 version: '{build}'
 image:
-- Previous Visual Studio 2013
+# - Previous Visual Studio 2013
 - Visual Studio 2013
-- Previous Visual Studio 2015
+# - Previous Visual Studio 2015
 - Visual Studio 2015
-- Previous Visual Studio 2017
+# - Previous Visual Studio 2017
 - Visual Studio 2017
 platform:
 #- x64
@@ -24,7 +24,9 @@ environment:
   - comp: 150
 
 init:
-- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- if %comp%==141 if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- if %comp%==110 if %platform:~-2%==64 (set arch=amd64) else (set arch=x86)
+- if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
 # Set MSVS environment
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
@@ -36,13 +38,10 @@ init:
 - if %comp%==110 (call "%VS110COMNTOOLS%VsDevCmd.bat" & call "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
 - if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
 - if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
-# info
-- where cmake & cmake --version
 
 install:
-- dir /w /s "%ProgramFiles(x86)%\CMake"
-- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" --verbose < FindwxWidgets-SupportMSVC1911.patch
-- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" --verbose < FindwxWidgets-SupportMSVC1911.patch
+# - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/latest/vswhere.exe
+- where vswhere
 
 build_script:
 - cd %APPVEYOR_BUILD_FOLDER%
