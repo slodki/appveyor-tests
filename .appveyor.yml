@@ -25,7 +25,7 @@ environment:
 
 init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-- if %comp%==110 if %platform:~-2%==64 (set arch=amd64) else (set arch=x86)
+- if %comp%==110 if not %platform:~-2%==64 set arch=x86
 - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
 # Set MSVS environment
@@ -39,8 +39,7 @@ init:
 - if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
 - if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
-- echo %arch%
-- where vswhere
+- where vswhere || exit 0
 
 install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/latest/vswhere.exe
