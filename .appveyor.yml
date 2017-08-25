@@ -1,10 +1,6 @@
 version: '{build}'
 image:
-# - Previous Visual Studio 2013
-# - Visual Studio 2013
-# - Previous Visual Studio 2015
-# - Visual Studio 2015
-# - Previous Visual Studio 2017
+- Visual Studio 2015
 - Visual Studio 2017
 platform:
 - x64
@@ -15,28 +11,32 @@ configuration:
 
 matrix:
   exclude:
-  - { comp:  90, platform: x64 }
-  - { comp: 100, platform: x64 }
+  # not exist
+  - { comp:  90, xp: _xp }
+  - { comp: 100, xp: _xp }
+  # not installed
+  # - { comp:  90, platform: x64 }
+  # - { comp: 100, platform: x64 }
   - { comp:  90, image: Visual Studio 2017 }
   - { comp: 100, image: Visual Studio 2017 }
   - { comp: 110, image: Visual Studio 2017 }
-  - { comp: 140, image: Visual Studio 2013 }
-  - { comp: 141, image: Visual Studio 2013 }
   - { comp: 141, image: Visual Studio 2015 }
+  # duplicated - select only one
+  - { comp: 120, image: Visual Studio 2015 }
+  - { comp: 140, image: Visual Studio 2015 }
+
 environment:
   matrix:
-  # - comp: 90
-  # - comp: 100
-  # - comp: 110
-  # - comp: 120
-  # - comp: 140
-  # - comp: 141
-  - comp: 150
-  # - { comp: 110, xp: _xp }
-  # - { comp: 120, xp: _xp }
-  # - { comp: 140, xp: _xp }
-  # - { comp: 141, xp: _xp }
-  - { comp: 150, xp: _xp }
+  - comp: 90
+  - comp: 100
+  - comp: 110
+  - comp: 120
+  - comp: 140
+  - comp: 141
+  - { comp: 110, xp: _xp }
+  - { comp: 120, xp: _xp }
+  - { comp: 140, xp: _xp }
+  - { comp: 141, xp: _xp }
 
 init:
 ### Set MSVS environment
@@ -58,9 +58,9 @@ init:
 - for %%f in ("%vcvarsall%") do dir /n/b/s "%%~dpf\*.bat"
 - call "%vcvarsall%" %arch%
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
-# - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
-# - if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
-# - if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
+- if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
+- if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+- if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
 # - dir /n/b/s
 #   "%ProgramFiles(x86)%\SetEnv.cmd"
