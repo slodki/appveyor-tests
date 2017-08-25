@@ -50,10 +50,23 @@ init:
 - if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
 - if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
-- dir /n/b/s c:\SetEnv.cmd c:\VsDevCmd.bat c:\vcvarsall.bat
-  c:\ucrtbase*.dll
-  c:\msvcp*.dll c:\msvcr*.dll c:\vcruntime*.dll c:\concrt*.dll
-  c:\MSBuild.exe c:\cl.exe c:\cmake.exe
+- dir /n/b/s
+  "%ProgramFiles(x86)%\SetEnv.cmd"
+  "%ProgramFiles(x86)%\VsDevCmd.bat"
+  "%ProgramFiles(x86)%\vcvarsall.bat"
+  "%ProgramFiles(x86)%\ucrtbase*.dll"
+  "%ProgramFiles(x86)%\msvcp*.dll"
+  "%ProgramFiles(x86)%\msvcr*.dll"
+  "%ProgramFiles(x86)%\vcruntime*.dll"
+  "%ProgramFiles(x86)%\concrt*.dll"
+  "%ProgramFiles(x86)%\MSBuild.exe"
+  "%ProgramFiles(x86)%\cl.exe"
+  "%ProgramFiles(x86)%\cmake.exe"
+- dir /n/b/s
+  "%ProgramFiles%\Microsoft SDKs\Windows\SetEnv.cmd"
+  "%ProgramFiles%\Microsoft SDKs\Windows\VsDevCmd.bat"
+  "%ProgramFiles%\Microsoft SDKs\Windows\vcvarsall.bat"
+- dir /n/b/s c:\WinDDK\cl.exe
 
 install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
