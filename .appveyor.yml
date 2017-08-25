@@ -15,16 +15,12 @@ configuration:
 
 matrix:
   exclude:
+  - { comp:  90, image: Visual Studio 2017 }
+  - { comp: 100, image: Visual Studio 2017 }
+  - { comp: 100, platform: x64 }
   - { comp: 140, image: Visual Studio 2013 }
   - { comp: 141, image: Visual Studio 2013 }
-  - comp: 141
-    image: Visual Studio 2015
-  - comp: 90
-    image: Visual Studio 2017
-  - comp: 100
-    image: Visual Studio 2017
-  - comp: 100
-    platform: x64
+  - { comp: 141, image: Visual Studio 2015 }
 environment:
   matrix:
   - comp: 90
@@ -33,16 +29,11 @@ environment:
   - comp: 120
   - comp: 140
   - comp: 141
-  - comp: 100
-    xp: _xp
-  - comp: 110
-    xp: _xp
-  - comp: 120
-    xp: _xp
-  - comp: 140
-    xp: _xp
-  - comp: 141
-    xp: _xp
+  - { comp: 100, xp: _xp }
+  - { comp: 110, xp: _xp }
+  - { comp: 120, xp: _xp }
+  - { comp: 140, xp: _xp }
+  - { comp: 141, xp: _xp }
 
 init:
 ### Set MSVS environment
