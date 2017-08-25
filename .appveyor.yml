@@ -40,6 +40,7 @@ init:
 # Set MSVS environment
 - set vs1
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
+- if "%VS90COMNTOOLS%"=="" set "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
 - if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
 - if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
 - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
@@ -49,6 +50,7 @@ init:
 - if %comp%==110 (call "%VS110COMNTOOLS%VsDevCmd.bat" & call "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
 - if %comp%==100 (call "%VS100COMNTOOLS%VsDevCmd.bat" & call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
 - if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+- if %comp%==90  (call "%VS90COMNTOOLS%VsDevCmd.bat" & call "%VS90COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
 - if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
 - dir /n/b/s
