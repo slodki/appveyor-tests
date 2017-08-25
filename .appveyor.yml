@@ -40,9 +40,9 @@ init:
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
 - if "%VS100COMNTOOLS%"=="" set "VS100COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 10.0\Common7\Tools\"
 - if  "%VS90COMNTOOLS%"=="" set  "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
-- if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
-- if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
-- if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
+# - if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
+# - if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
+# - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
 # Set developer command prompt
 - call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
 - if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
@@ -98,9 +98,12 @@ install:
 build_script:
 - cd %APPVEYOR_BUILD_FOLDER%
 - mkdir build & cd build
-- if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2013" set "gen=12 2013"
-- if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2015" set "gen=14 2015"
-- if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2017" set "gen=15 2017"
+- if %comp%==90 set "gen=9 2008"
+- if %comp%==100 set "gen=10 2010"
+- if %comp%==110 set "gen=11 2012"
+- if %comp%==120 set "gen=12 2013"
+- if %comp%==140 set "gen=14 2015"
+- if %comp%==141 set "gen=15 2017"
 - if %platform:~-2%==64 set "gen=%gen% Win64"
 - cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
 
