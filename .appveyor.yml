@@ -29,7 +29,6 @@ environment:
   - comp: 120
   - comp: 140
   - comp: 141
-  - { comp: 100, xp: _xp }
   - { comp: 110, xp: _xp }
   - { comp: 120, xp: _xp }
   - { comp: 140, xp: _xp }
@@ -104,7 +103,7 @@ build_script:
 - mkdir build & cd build
 - if %comp%==90 set "gen=9 2008"
 - if %comp%==100 (set "gen=10 2010" & set "tool=-T v%comp%%xp%")
-- if %comp%==110 (set "gen=11 2012" & set "tool=-T v%comp%%xp%,host=x64")
+- if %comp%==110 (set "gen=11 2012" & set "tool=-T v%comp%%xp%")
 - if %comp%==120 (set "gen=12 2013" & set "tool=-T v%comp%%xp%,host=x64")
 - if %comp%==140 (set "gen=14 2015" & set "tool=-T v%comp%%xp%,host=x64")
 - if %comp%==141 (set "gen=15 2017" & set "tool=-T v%comp%%xp%,host=x64")
