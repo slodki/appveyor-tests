@@ -35,8 +35,11 @@ init:
 - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
 # Set MSVS environment
+- set vs1
+- set windows
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
 - if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
+- if "%WINDOWS70SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
 - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
 - if %comp%==141  call "%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" %arch%
 - if %comp%==140 (call "%VS140COMNTOOLS%VsDevCmd.bat" & call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
@@ -97,3 +100,13 @@ build_script:
 - cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
 
 test: off
+
+artifacts:
+- path: '%WINDOWS71SDK%SetEnv.cmd'
+- path: '%WINDOWS70SDK%SetEnv.cmd'
+- path: '%VS140COMNTOOLS%VsDevCmd.bat'
+- path: '%VS140COMNTOOLS%..\..\VC\vcvarsall.bat'
+- path: '%VS120COMNTOOLS%VsDevCmd.bat'
+- path: '%VS120COMNTOOLS%..\..\VC\vcvarsall.bat'
+- path: '%VS110COMNTOOLS%VsDevCmd.bat'
+- path: '%VS110COMNTOOLS%..\..\VC\vcvarsall.bat'
