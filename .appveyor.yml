@@ -25,6 +25,8 @@ matrix:
     image: Visual Studio 2017
   - comp: 100
     image: Visual Studio 2017
+  - comp: 100
+    platform: x64
 environment:
   matrix:
   - comp: 90
@@ -33,8 +35,6 @@ environment:
   - comp: 120
   - comp: 140
   - comp: 141
-  - comp: 90
-    xp: _xp
   - comp: 100
     xp: _xp
   - comp: 110
@@ -61,7 +61,7 @@ init:
 - if %comp%==110 if %platform:~-2%==64 set arch=x86_amd64
 - call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
 - if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
-- if %comp%==90 set "vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvars%platform:~-2%.bat"
+- if %comp%==90 if %platform:~-2%==64 (set vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvarsx86_amd64.bat) else (set vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvars32.bat)
 - for %%f in ("%vcvarsall%") do dir /n/b/s "%%~dpf\*.bat"
 - call "%vcvarsall%" %arch%
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
