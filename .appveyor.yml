@@ -118,5 +118,5 @@ build_script:
 test: off
 
 artifacts:
-- path: out
-  name: skrypty
+- path: 'out\*.*'
+  name: 'skrypty'
