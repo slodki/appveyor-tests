@@ -61,8 +61,8 @@ init:
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
 - if %comp%==90 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
 - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
-- call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
-# - call "%WINDOWS70SDK%SetEnv.cmd" /%arch% /%configuration%
+# - call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+- call "%WINDOWS70SDK%SetEnv.cmd" /%arch% /%configuration%
 # - call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
 # - dir /n/b/s
