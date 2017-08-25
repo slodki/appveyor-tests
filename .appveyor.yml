@@ -15,10 +15,8 @@ configuration:
 
 matrix:
   exclude:
-  - comp: 140
-    image: Visual Studio 2013
-  - comp: 141
-    image: Visual Studio 2013
+  - { comp: 140, image: Visual Studio 2013 }
+  - { comp: 141, image: Visual Studio 2013 }
   - comp: 141
     image: Visual Studio 2015
   - comp: 90
