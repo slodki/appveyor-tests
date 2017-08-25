@@ -1,9 +1,9 @@
 version: '{build}'
 image:
 # - Previous Visual Studio 2013
-- Visual Studio 2013
+# - Visual Studio 2013
 # - Previous Visual Studio 2015
-- Visual Studio 2015
+# - Visual Studio 2015
 # - Previous Visual Studio 2017
 - Visual Studio 2017
 platform:
@@ -25,16 +25,18 @@ matrix:
   - { comp: 141, image: Visual Studio 2015 }
 environment:
   matrix:
-  - comp: 90
-  - comp: 100
-  - comp: 110
-  - comp: 120
-  - comp: 140
-  - comp: 141
-  - { comp: 110, xp: _xp }
-  - { comp: 120, xp: _xp }
-  - { comp: 140, xp: _xp }
-  - { comp: 141, xp: _xp }
+  # - comp: 90
+  # - comp: 100
+  # - comp: 110
+  # - comp: 120
+  # - comp: 140
+  # - comp: 141
+  - comp: 150
+  # - { comp: 110, xp: _xp }
+  # - { comp: 120, xp: _xp }
+  # - { comp: 140, xp: _xp }
+  # - { comp: 141, xp: _xp }
+  - { comp: 150, xp: _xp }
 
 init:
 ### Set MSVS environment
@@ -109,6 +111,7 @@ build_script:
 - if %comp%==120 (set "gen=12 2013" & set "tool=-T v%comp%%xp%,host=x64")
 - if %comp%==140 (set "gen=14 2015" & set "tool=-T v%comp%%xp%,host=x64")
 - if %comp%==141 (set "gen=15 2017" & set "tool=-T v%comp%%xp%,host=x64")
+- if %comp%==150 (set "gen=15 2017" & set "tool=-T v%comp%%xp%,host=x64")
 - if %platform:~-2%==64 set "gen=%gen% Win64"
 - cmake %tool% -G "Visual Studio %gen%" ..
 
