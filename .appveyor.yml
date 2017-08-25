@@ -25,12 +25,12 @@ matrix:
     image: Visual Studio 2017
 environment:
   matrix:
-  - comp: 90
-  - comp: 100
-  - comp: 110
+  # - comp: 90
+  # - comp: 100
+  # - comp: 110
   - comp: 120
-  - comp: 140
-  - comp: 141
+  # - comp: 140
+  # - comp: 141
 
 init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
@@ -112,10 +112,20 @@ build_script:
 - copy /y "%VS100COMNTOOLS%VsDevCmd.bat" out\100_VsDevCmd.bat || exit 0
 - copy /y "%VS90COMNTOOLS%VsDevCmd.bat" out\90_VsDevCmd.bat || exit 0
 - copy /y "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" out\140_vcvarsall.bat || exit 0
+- copy /y "%VS140COMNTOOLS%..\..\VC\bin\vcvars32.bat" out\140_vcvars32.bat || exit 0
+- copy /y "%VS140COMNTOOLS%..\..\VC\bin\amd64\vcvars64.bat" out\140_vcvars64.bat || exit 0
 - copy /y "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" out\120_vcvarsall.bat || exit 0
+- copy /y "%VS120COMNTOOLS%..\..\VC\bin\vcvars32.bat" out\120_vcvars32.bat || exit 0
+- copy /y "%VS120COMNTOOLS%..\..\VC\bin\amd64\vcvars64.bat" out\120_vcvars64.bat || exit 0
 - copy /y "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" out\110_vcvarsall.bat || exit 0
+- copy /y "%VS110COMNTOOLS%..\..\VC\bin\vcvars32.bat" out\110_vcvars32.bat || exit 0
+- copy /y "%VS110COMNTOOLS%..\..\VC\bin\amd64\vcvars64.bat" out\110_vcvars64.bat || exit 0
 - copy /y "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" out\100_vcvarsall.bat || exit 0
+- copy /y "%VS100COMNTOOLS%..\..\VC\bin\vcvars32.bat" out\100_vcvars32.bat || exit 0
+- copy /y "%VS100COMNTOOLS%..\..\VC\bin\amd64\vcvars64.bat" out\100_vcvars64.bat || exit 0
 - copy /y "%VS90COMNTOOLS%..\..\VC\vcvarsall.bat" out\90_vcvarsall.bat || exit 0
+- copy /y "%VS90COMNTOOLS%..\..\VC\bin\vcvars32.bat" out\90_vcvars32.bat || exit 0
+- copy /y "%VS90COMNTOOLS%..\..\VC\bin\amd64\vcvars64.bat" out\90_vcvars64.bat || exit 0
 
 test: off
 
