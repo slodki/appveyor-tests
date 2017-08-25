@@ -48,6 +48,7 @@ init:
 - if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
 - if %comp% LSS 120 if not %platform:~-2%==64 set arch=x86
+- echo dir /n/b/s "%vcvarsall:~dp%\*.bat"
 - call "%vcvarsall%" %arch%
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
 # - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
