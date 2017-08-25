@@ -28,7 +28,7 @@ matrix:
 
 environment:
   matrix:
-  - comp: 90
+  # - comp: 90
   - comp: 100
   # - comp: 110
   # - comp: 120
@@ -45,35 +45,26 @@ init:
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
 - if "%VS100COMNTOOLS%"=="" set "VS100COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 10.0\Common7\Tools\"
 - if  "%VS90COMNTOOLS%"=="" set  "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
-- if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
-- if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
-- if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
 # Set developer command prompt
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
 - if %comp% LSS 120 if not %platform:~-2%==64 set arch=x86
 - if %comp%==110 if %platform:~-2%==64 set arch=x86_amd64
 - call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
 - if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
-- if %comp%==150 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %comp%==90 if %platform:~-2%==64 (set "vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvarsx86_amd64.bat") else (set "vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvars32.bat")
 - for %%f in ("%vcvarsall%") do dir /n/b/s "%%~dpf\*.bat"
 - call "%vcvarsall%" %arch%
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
-- if %comp%==90 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
-- if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
-# - call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
-- call "%WINDOWS70SDK%SetEnv.cmd" /%arch% /%configuration%
-# - call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
-# - dir /n/b/s
+- dir /n/b/s
+  "%ProgramFiles(x86)%\ucrtbase*.dll"
+  "%ProgramFiles(x86)%\msvcp*.dll"
+  "%ProgramFiles(x86)%\msvcr*.dll"
+  "%ProgramFiles(x86)%\vcruntime*.dll"
+  "%ProgramFiles(x86)%\concrt*.dll"
 #   "%ProgramFiles(x86)%\SetEnv.cmd"
 #   "%ProgramFiles(x86)%\VsDevCmd.bat"
 #   "%ProgramFiles(x86)%\vcvarsall.bat"
-#   "%ProgramFiles(x86)%\ucrtbase*.dll"
-#   "%ProgramFiles(x86)%\msvcp*.dll"
-#   "%ProgramFiles(x86)%\msvcr*.dll"
-#   "%ProgramFiles(x86)%\vcruntime*.dll"
-#   "%ProgramFiles(x86)%\concrt*.dll"
 #   "%ProgramFiles(x86)%\MSBuild.exe"
 #   "%ProgramFiles(x86)%\cl.exe"
 #   "%ProgramFiles(x86)%\cmake.exe"
@@ -115,7 +106,6 @@ build_script:
 - if %comp%==120 (set "gen=12 2013" & set "tool=-T v%comp%%xp%,host=x64")
 - if %comp%==140 (set "gen=14 2015" & set "tool=-T v%comp%%xp%,host=x64")
 - if %comp%==141 (set "gen=15 2017" & set "tool=-T v%comp%%xp%,host=x64")
-- if %comp%==150 (set "gen=15 2017" & set "tool=-T v%comp%%xp%,host=x64")
 - if %platform:~-2%==64 set "gen=%gen% Win64"
 - cmake %tool% -G "Visual Studio %gen%" ..
 
