@@ -19,20 +19,15 @@ matrix:
     image: Visual Studio 2013
   - comp: 141
     image: Visual Studio 2013
-  - comp: 150
-    image: Visual Studio 2013
   - comp: 141
-    image: Visual Studio 2015
-  - comp: 150
     image: Visual Studio 2015
 environment:
   matrix:
-  # - comp: 100
-  # - comp: 110
+  - comp: 100
+  - comp: 110
   - comp: 120
-  # - comp: 140
-  # - comp: 141
-  # - comp: 150
+  - comp: 140
+  - comp: 141
 
 init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
@@ -63,9 +58,9 @@ init:
   "%ProgramFiles(x86)%\cl.exe"
   "%ProgramFiles(x86)%\cmake.exe"
 - dir /n/b/s
-  "%ProgramFiles%\Microsoft SDKs\Windows\SetEnv.cmd"
-  "%ProgramFiles%\Microsoft SDKs\Windows\VsDevCmd.bat"
-  "%ProgramFiles%\Microsoft SDKs\Windows\vcvarsall.bat"
+  "%ProgramFiles%\Microsoft SDKs\SetEnv.cmd"
+  "%ProgramFiles%\Microsoft SDKs\VsDevCmd.bat"
+  "%ProgramFiles%\Microsoft SDKs\vcvarsall.bat"
 - dir /n/b/s c:\WinDDK\cl.exe
 
 install:
