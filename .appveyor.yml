@@ -56,10 +56,11 @@ init:
 # - if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
 # - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
 # Set developer command prompt
-- call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
-- if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
 - if %comp% LSS 120 if not %platform:~-2%==64 set arch=x86
+- call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
+- if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- if %comp%==90 set "vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvars%platform:~-2%.bat"
 - for %%f in ("%vcvarsall%") do dir /n/b/s "%%~dpf\*.bat"
 - call "%vcvarsall%" %arch%
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
