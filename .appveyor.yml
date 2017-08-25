@@ -53,6 +53,7 @@ init:
 - if %comp%==110 if %platform:~-2%==64 set arch=x86_amd64
 - call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
 - if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- if %comp%==150 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %comp%==90 if %platform:~-2%==64 (set "vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvarsx86_amd64.bat") else (set "vcvarsall=%VS90COMNTOOLS%..\..\VC\bin\vcvars32.bat")
 - for %%f in ("%vcvarsall%") do dir /n/b/s "%%~dpf\*.bat"
 - call "%vcvarsall%" %arch%
