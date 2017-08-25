@@ -33,21 +33,22 @@ environment:
   - comp: 141
 
 init:
-- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-- if %comp%==110 if not %platform:~-2%==64 set arch=x86
-# - if %comp%==90 if not %platform:~-2%==64 set arch=x86
-# - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
-- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
-# Set MSVS environment
+### Set MSVS environment
+# AppVeyor missing paths
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
 - if "%VS100COMNTOOLS%"=="" set "VS100COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 10.0\Common7\Tools\"
 - if  "%VS90COMNTOOLS%"=="" set  "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
 - if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
 - if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
 - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
+# Set developer command prompt
 - call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
 - if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- if %comp% LSS 120 if not %platform:~-2%==64 set arch=x86
 - call "%vcvarsall%" %arch%
+- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
+# - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
 # - if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
 # - if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
