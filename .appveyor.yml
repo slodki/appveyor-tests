@@ -39,11 +39,12 @@ init:
 - if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
 - if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
-- where vswhere || exit 0
 
 install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
 - vswhere -?
+- vswhere -all -prerelease -products "*"
+- vswhere -all -prerelease -legacy
 
 build_script:
 - cd %APPVEYOR_BUILD_FOLDER%
