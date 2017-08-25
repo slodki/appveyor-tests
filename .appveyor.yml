@@ -101,15 +101,20 @@ build_script:
 - if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2017" set "gen=15 2017"
 - if %platform:~-2%==64 set "gen=%gen% Win64"
 - cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
+- mkdir out
+- copy /y "%WINDOWS71SDK%SetEnv.cmd" out\71SDK_SetEnv.cmd || exit 0
+- copy /y "%WINDOWS70SDK%SetEnv.cmd" out\70SDK_SetEnv.cmd || exit 0
+- copy /y "%VS140COMNTOOLS%VsDevCmd.bat" out\140_VsDevCmd.bat || exit 0
+- copy /y "%VS120COMNTOOLS%VsDevCmd.bat" out\120_VsDevCmd.bat || exit 0
+- copy /y "%VS110COMNTOOLS%VsDevCmd.bat" out\110_VsDevCmd.bat || exit 0
+- copy /y "%VS100COMNTOOLS%VsDevCmd.bat" out\100_VsDevCmd.bat || exit 0
+- copy /y "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" out\140_vcvarsall.bat || exit 0
+- copy /y "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" out\120_vcvarsall.bat || exit 0
+- copy /y "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" out\110_vcvarsall.bat || exit 0
+- copy /y "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" out\100_vcvarsall.bat || exit 0
 
 test: off
 
 artifacts:
-- path: '%WINDOWS71SDK%SetEnv.cmd'
-- path: '%WINDOWS70SDK%SetEnv.cmd'
-- path: '%VS140COMNTOOLS%VsDevCmd.bat'
-- path: '%VS140COMNTOOLS%..\..\VC\vcvarsall.bat'
-- path: '%VS120COMNTOOLS%VsDevCmd.bat'
-- path: '%VS120COMNTOOLS%..\..\VC\vcvarsall.bat'
-- path: '%VS110COMNTOOLS%VsDevCmd.bat'
-- path: '%VS110COMNTOOLS%..\..\VC\vcvarsall.bat'
+- path: out
+  name: skrypty
