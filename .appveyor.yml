@@ -69,7 +69,7 @@ init:
   "%ProgramFiles%\Microsoft SDKs\SetEnv.cmd"
   "%ProgramFiles%\Microsoft SDKs\VsDevCmd.bat"
   "%ProgramFiles%\Microsoft SDKs\vcvarsall.bat"
-- dir /n/b/s c:\WinDDK\cl.exe
+- dir /n/b/s c:\WinDDK\cl.exe || exit 0
 
 install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
