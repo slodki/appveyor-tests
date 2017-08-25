@@ -27,12 +27,12 @@ matrix:
     image: Visual Studio 2015
 environment:
   matrix:
-  - comp: 100
-  - comp: 110
+  # - comp: 100
+  # - comp: 110
   - comp: 120
-  - comp: 140
-  - comp: 141
-  - comp: 150
+  # - comp: 140
+  # - comp: 141
+  # - comp: 150
 
 init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
