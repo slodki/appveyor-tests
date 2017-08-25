@@ -1,5 +1,6 @@
 version: '{build}'
 image:
+- Visual Studio 2013
 - Visual Studio 2015
 - Visual Studio 2017
 platform:
@@ -29,14 +30,14 @@ environment:
   matrix:
   - comp: 90
   - comp: 100
-  - comp: 110
-  - comp: 120
-  - comp: 140
-  - comp: 141
-  - { comp: 110, xp: _xp }
-  - { comp: 120, xp: _xp }
-  - { comp: 140, xp: _xp }
-  - { comp: 141, xp: _xp }
+  # - comp: 110
+  # - comp: 120
+  # - comp: 140
+  # - comp: 141
+  # - { comp: 110, xp: _xp }
+  # - { comp: 120, xp: _xp }
+  # - { comp: 140, xp: _xp }
+  # - { comp: 141, xp: _xp }
 
 init:
 ### Set MSVS environment
@@ -59,8 +60,9 @@ init:
 - call "%vcvarsall%" %arch%
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
 - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
-- if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
-- if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
+- call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+- call "%WINDOWS70SDK%SetEnv.cmd" /%arch% /%configuration%
+- call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
 # - dir /n/b/s
 #   "%ProgramFiles(x86)%\SetEnv.cmd"
