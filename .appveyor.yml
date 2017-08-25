@@ -38,20 +38,23 @@ init:
 - if %comp%==100 if %platform:~-2%==64 (set arch=x64) else (set arch=x86)
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
 # Set MSVS environment
-- set vs1
+- set vs
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
 - if "%VS90COMNTOOLS%"=="" set "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
 - if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
 - if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
 - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
-- if %comp%==141  call "%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" %arch%
-- if %comp%==140 (call "%VS140COMNTOOLS%VsDevCmd.bat" & call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
-- if %comp%==120 (call "%VS120COMNTOOLS%VsDevCmd.bat" & call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
-- if %comp%==110 (call "%VS110COMNTOOLS%VsDevCmd.bat" & call "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
-- if %comp%==100 (call "%VS100COMNTOOLS%VsDevCmd.bat" & call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
-- if %comp%==100  call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
-- if %comp%==90  (call "%VS90COMNTOOLS%VsDevCmd.bat" & call "%VS90COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%)
-- if %comp%==90   call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
+- echo comp %comp%
+- echo VS___COMNTOOLS VS%comp%COMNTOOLS
+- call echo _VS___COMNTOOLS_ %%VS%comp%COMNTOOLS%%
+- if %comp%==141 call "%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" %arch%
+- if %comp%==140 call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
+- if %comp%==120 call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
+- if %comp%==110 call "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
+- if %comp%==100 call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
+- if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+- if %comp%==90  call "%VS90COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
+- if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
 - dir /n/b/s
   "%ProgramFiles(x86)%\SetEnv.cmd"
