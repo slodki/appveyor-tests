@@ -7,11 +7,11 @@ image:
 - Previous Visual Studio 2017
 - Visual Studio 2017
 platform:
-- x64
+#- x64
 - Win32
 configuration:
 - Release
-- Debug
+#- Debug
 
 environment:
   matrix:
