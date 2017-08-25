@@ -25,12 +25,12 @@ matrix:
     image: Visual Studio 2017
 environment:
   matrix:
-  # - comp: 90
-  # - comp: 100
-  # - comp: 110
+  - comp: 90
+  - comp: 100
+  - comp: 110
   - comp: 120
-  # - comp: 140
-  # - comp: 141
+  - comp: 140
+  - comp: 141
 
 init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
@@ -40,39 +40,34 @@ init:
 # Set MSVS environment
 - set vs
 - if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
-- if "%VS90COMNTOOLS%"=="" set "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
+- if "%VS100COMNTOOLS%"=="" set "VS100COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 10.0\Common7\Tools\"
+- if  "%VS90COMNTOOLS%"=="" set  "VS90COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio 9.0\Common7\Tools\"
 - if "%WINDOWS71SDK%"=="" set "WINDOWS71SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\"
 - if "%WINDOWS70SDK%"=="" set "WINDOWS70SDK=%ProgramFiles%\Microsoft SDKs\Windows\v7.0\Bin\"
 - if "%WINDOWS61SDK%"=="" set "WINDOWS61SDK=%ProgramFiles%\Microsoft SDKs\Windows\v6.1\Bin\"
-- echo comp %comp%
-- echo VS___COMNTOOLS VS%comp%COMNTOOLS
-- call echo _VS___COMNTOOLS_ %%VS%comp%COMNTOOLS%%
-- if %comp%==141 call "%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" %arch%
-- if %comp%==140 call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
-- if %comp%==120 call "%VS120COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
-- if %comp%==110 call "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
-- if %comp%==100 call "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
-- if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
-- if %comp%==90  call "%VS90COMNTOOLS%..\..\VC\vcvarsall.bat" %arch%
-- if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
+- call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
+- if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- call "%vcvarsall%" %arch%
+# - if %comp%==100 call "%WINDOWS71SDK%SetEnv.cmd" /%arch% /%configuration%
+# - if %comp%==90  call "%WINDOWS61SDK%SetEnv.cmd" /%arch% /%configuration%
 #info
-- dir /n/b/s
-  "%ProgramFiles(x86)%\SetEnv.cmd"
-  "%ProgramFiles(x86)%\VsDevCmd.bat"
-  "%ProgramFiles(x86)%\vcvarsall.bat"
-  "%ProgramFiles(x86)%\ucrtbase*.dll"
-  "%ProgramFiles(x86)%\msvcp*.dll"
-  "%ProgramFiles(x86)%\msvcr*.dll"
-  "%ProgramFiles(x86)%\vcruntime*.dll"
-  "%ProgramFiles(x86)%\concrt*.dll"
-  "%ProgramFiles(x86)%\MSBuild.exe"
-  "%ProgramFiles(x86)%\cl.exe"
-  "%ProgramFiles(x86)%\cmake.exe"
-- dir /n/b/s
-  "%ProgramFiles%\Microsoft SDKs\SetEnv.cmd"
-  "%ProgramFiles%\Microsoft SDKs\VsDevCmd.bat"
-  "%ProgramFiles%\Microsoft SDKs\vcvarsall.bat"
-- dir /n/b/s c:\WinDDK\cl.exe || exit 0
+# - dir /n/b/s
+#   "%ProgramFiles(x86)%\SetEnv.cmd"
+#   "%ProgramFiles(x86)%\VsDevCmd.bat"
+#   "%ProgramFiles(x86)%\vcvarsall.bat"
+#   "%ProgramFiles(x86)%\ucrtbase*.dll"
+#   "%ProgramFiles(x86)%\msvcp*.dll"
+#   "%ProgramFiles(x86)%\msvcr*.dll"
+#   "%ProgramFiles(x86)%\vcruntime*.dll"
+#   "%ProgramFiles(x86)%\concrt*.dll"
+#   "%ProgramFiles(x86)%\MSBuild.exe"
+#   "%ProgramFiles(x86)%\cl.exe"
+#   "%ProgramFiles(x86)%\cmake.exe"
+# - dir /n/b/s
+#   "%ProgramFiles%\Microsoft SDKs\SetEnv.cmd"
+#   "%ProgramFiles%\Microsoft SDKs\VsDevCmd.bat"
+#   "%ProgramFiles%\Microsoft SDKs\vcvarsall.bat"
+# - dir /n/b/s c:\WinDDK\cl.exe || exit 0
 
 install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
