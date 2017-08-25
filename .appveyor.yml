@@ -74,7 +74,6 @@ init:
 install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
 - vswhere -all -prerelease -products "*"
-- vswhere -all -prerelease -products "*" -requires Microsoft.VisualStudio.Component.VC.140
 - vswhere -all -prerelease -legacy
 
 # Microsoft.Component.MSBuild
@@ -103,6 +102,7 @@ build_script:
 - if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2017" set "gen=15 2017"
 - if %platform:~-2%==64 set "gen=%gen% Win64"
 - cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
+- cd %APPVEYOR_BUILD_FOLDER%
 - mkdir out
 - copy /y "%WINDOWS71SDK%SetEnv.cmd" out\71SDK_SetEnv.cmd || exit 0
 - copy /y "%WINDOWS70SDK%SetEnv.cmd" out\70SDK_SetEnv.cmd || exit 0
