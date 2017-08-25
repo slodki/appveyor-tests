@@ -73,7 +73,6 @@ install:
 - vswhere -all -prerelease -products "*"
 - vswhere -all -prerelease -products "*" -requires Microsoft.VisualStudio.Component.VC.140
 - vswhere -all -prerelease -legacy
-- vswhere -all -prerelease -legacy -requires Microsoft.VisualStudio.Component.VC.140
 
 # Microsoft.Component.MSBuild
 # Microsoft.Component.VC.Runtime.UCRTSDK
