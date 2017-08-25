@@ -42,7 +42,7 @@ init:
 - where vswhere || exit 0
 
 install:
-- curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/latest/vswhere.exe
+- curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
 - vswhere -?
 
 build_script:
