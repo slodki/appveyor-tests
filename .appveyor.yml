@@ -15,9 +15,11 @@ configuration:
 
 matrix:
   exclude:
+  - { comp:  90, platform: x64 }
+  - { comp: 100, platform: x64 }
   - { comp:  90, image: Visual Studio 2017 }
   - { comp: 100, image: Visual Studio 2017 }
-  - { comp: 100, platform: x64 }
+  - { comp: 110, image: Visual Studio 2017 }
   - { comp: 140, image: Visual Studio 2013 }
   - { comp: 141, image: Visual Studio 2013 }
   - { comp: 141, image: Visual Studio 2015 }
