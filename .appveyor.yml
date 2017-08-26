@@ -1,0 +1,23 @@
+version: '{build}'
+image: Visual Studio 2017
+
+environment:
+  path: '%path%;C:\cygwin64\bin;C:\cygwin\bin;%APPVEYOR_BUILD_FOLDER%\bin'
+
+install:
+- curl -fsSL -O https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.19.8.1-v1.14/gettext0.19.8.1-iconv1.14-shared-64.zip
+- 7z x *.zip >nul
+
+build_script:
+- for %%f in ("C:\Program Files\Git\usr" C:\cygwin64 C:\cygwin .) do (
+    echo. &
+    echo %%~f\bin\msgmerge &
+    echo. &
+    "%%~f\bin\msgmerge" --version &
+    echo. &
+    echo %%~f\bin\msgmerge.exe &
+    echo. &
+    "%%~f\bin\msgmerge.exe" --version
+  )
+
+test: off
