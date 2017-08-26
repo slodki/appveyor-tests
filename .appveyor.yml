@@ -52,6 +52,9 @@ install:
 - curl -fsSL -O https://github.com/Microsoft/vswhere/releases/download/2.1.3/vswhere.exe
 - vswhere -all -prerelease -products "*"
 - vswhere -all -prerelease -legacy
+# Patch CMake
+- if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" (set CMVer=3.8) else (set CMVer=3.9)
+- type *.cmake-*.patch 2>nul | patch -d "%ProgramFiles(x86)%\CMake\share\cmake-%CMVer%\Modules"
 
 # Microsoft.Component.MSBuild
 # Microsoft.Component.VC.Runtime.UCRTSDK
