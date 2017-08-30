@@ -40,9 +40,9 @@ init:
 - call "%vcvarsall%" %arch%
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
-- dir /n/b/s c:\devenv.exe c:\msbuild.exe
-- where devenv
-- where msbuild
+- dir /n/b/s c:\devenv.* c:\msbuild.*
+- where devenv || exit 0
+- where msbuild || exit 0
 
 build: off
 test: off
