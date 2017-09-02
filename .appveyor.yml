@@ -3,13 +3,11 @@ branches: { except: [ gh-pages ] }
 clone_depth: 10 # to allow queued build jobs
 image:
 - Visual Studio 2017
-- Visual Studio 2015
 configuration:
 - Release
 # - Debug
 platform:
 - x64
-- Win32
 
 matrix:
   exclude:
@@ -24,10 +22,7 @@ environment:
   msbuild_opts: /maxcpucount /verbosity:minimal /nologo /p:PreferredToolArchitecture=x64
   CL: /MP
   matrix:
-  - comp: 141
   - comp: 140
-  - comp: 120
-  - comp: 110
 
 init:
 # AppVeyor missing paths
@@ -40,9 +35,10 @@ init:
 - call "%vcvarsall%" %arch%
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
-- dir /n/b/s c:\devenv.* c:\msbuild.*
-- where devenv || exit 0
-- where msbuild || exit 0
+# Patch CMake
+- for %%d in ("%ProgramFiles(x86)%\CMake\share\cmake-*\Modules") do (
+    echo jestem w %%d
+  )
 
 build: off
 test: off
