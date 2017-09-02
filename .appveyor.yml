@@ -36,9 +36,9 @@ init:
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
 # Patch CMake
-- for %%d in (%ProgramFiles\(x86\)%\CMake\share\cmake-*\Modules) do 
+- for /f "usebackq" %%d in ("%ProgramFiles(x86)%\CMake\share\cmake-*\Modules) do 
     echo jestem w %%d
-- echo MESSAGE(dfsdf) | cmake -P con
+- echo MESSAGE(dfsdf) | cmake -P "con:"
 
 build: off
 test: off
