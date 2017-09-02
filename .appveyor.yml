@@ -36,7 +36,7 @@ init:
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
 # Patch CMake
-- for %%d in (%ProgramFiles(x86)%\CMake\share\cmake-*\Modules) do 
+- for %%d in (%ProgramFiles\(x86\)%\CMake\share\cmake-*\Modules) do 
     echo jestem w %%d
 - echo MESSAGE(dfsdf) | cmake -P con
 
