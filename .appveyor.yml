@@ -12,6 +12,7 @@ environment:
   - task: 1
   - task: 22
   - task: 3
+  - task: 2
 
 init:
 - echo INIT
