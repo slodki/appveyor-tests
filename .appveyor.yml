@@ -18,13 +18,13 @@ init:
 cache:
 - '%MYDIR%'
 
-install:
+before_build:
 - dir %MYDIR%
 - type %MYDIR%\my.log
 
 build_script:
 - date
 
-after_success:
+after_build:
 - dir %MYDIR%
 - type %MYDIR%\my.log
