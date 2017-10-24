@@ -23,7 +23,6 @@ cache:
 before_build:
 - echo BEFORE
 - if not exist %MYDIR% mkdir %MYDIR%
-- dir %MYDIR%
 - if exist %MYDIR%\%file% type %MYDIR%\%file%
 
 build_script:
@@ -32,5 +31,4 @@ build_script:
 
 after_build:
 - echo AFTER
-- dir %MYDIR%
 - type %MYDIR%\%file%
