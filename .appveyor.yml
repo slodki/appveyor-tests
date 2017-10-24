@@ -7,6 +7,7 @@ platform:
 configuration: Release
 
 environment:
+  file: my.log
   matrix:
   - task: 1
   - task: 2
@@ -19,12 +20,13 @@ cache:
 - '%MYDIR%'
 
 before_build:
-- dir %MYDIR% || echo.
-- type %MYDIR%\my.log
+- if not exist %MYDIR% mkdir %MYDIR%
+- dir %MYDIR%
+- if exist %MYDIR%\%file% type %MYDIR%\%file%
 
 build_script:
-- echo %DATE% %TIME% task %task% %platform% >>%MYDIR%\my.log
+- echo %DATE% %TIME% task %task% %platform% >>%MYDIR%\%file%
 
 after_build:
 - dir %MYDIR%
-- type %MYDIR%\my.log
+- type %MYDIR%\%file%
