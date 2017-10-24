@@ -14,19 +14,23 @@ environment:
   - task: 3
 
 init:
+- echo INIT
 - set MYDIR=C:\mycache
 
 cache:
 - '%MYDIR%'
 
 before_build:
+- echo BEFORE
 - if not exist %MYDIR% mkdir %MYDIR%
 - dir %MYDIR%
 - if exist %MYDIR%\%file% type %MYDIR%\%file%
 
 build_script:
+- echo BUILD
 - echo %DATE% %TIME% task %task% %platform% >>%MYDIR%\%file%
 
 after_build:
+- echo AFTER
 - dir %MYDIR%
 - type %MYDIR%\%file%
