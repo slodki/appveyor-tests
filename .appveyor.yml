@@ -10,7 +10,7 @@ environment:
   file: my.log
   matrix:
   - task: 1
-  - task: 2
+  - task: 22
   - task: 3
 
 init:
