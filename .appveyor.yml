@@ -8,6 +8,7 @@ configuration: Release
 
 environment:
   file: my.log
+  modify: 123
   matrix:
   - task: 1
   - task: 22
