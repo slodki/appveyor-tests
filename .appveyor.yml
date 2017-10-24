@@ -14,17 +14,16 @@ environment:
 
 init:
 - set MYDIR=C:\mycache
-- date
 
 cache:
 - '%MYDIR%'
 
 before_build:
-- dir %MYDIR%
+- dir %MYDIR% || echo.
 - type %MYDIR%\my.log
 
 build_script:
-- date
+- echo %DATE% %TIME% task %task% %platform% >>%MYDIR%\my.log
 
 after_build:
 - dir %MYDIR%
