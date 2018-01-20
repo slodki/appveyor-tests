@@ -66,7 +66,7 @@ init:
 - where cmake & cmake --version
 
 install:
-- set
+- cl
 - dir /w /s "%ProgramFiles(x86)%\CMake"
 - if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.8\Modules" --verbose < FindwxWidgets-SupportMSVC1911.patch
 - if exist "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" patch -d "%ProgramFiles(x86)%\CMake\share\cmake-3.9\Modules" --verbose < FindwxWidgets-SupportMSVC1911.patch
@@ -93,6 +93,6 @@ build_script:
 - if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2015" set "gen=14 2015"
 - if "%APPVEYOR_BUILD_WORKER_IMAGE:~-4%"=="2017" set "gen=15 2017"
 - if %platform:~-2%==64 set "gen=%gen% Win64"
-- cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
+#- cmake -T v%comp%,host=x64 -G "Visual Studio %gen%" ..
 
 test: off
