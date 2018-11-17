@@ -1,0 +1,24 @@
+version: '{build}'
+image:
+- Visual Studio 2017
+configuration:
+- Release
+platform:
+- x64
+
+environment:
+  VCPKG_ROOT: C:\tools\vcpkg
+  VCPKG_TARGET_TRIPLET: '%platform%-windows-static'
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+
+cache:
+- '%VCPKG_ROOT%\installed'
+
+install:
+- vcpkg install wxwidgets:%VCPKG_TARGET_TRIPLET%
+- vcpkg list
+
+build_script:
+- cmake -G "Visual Studio 15 2017 Win64" -DVCPKG_TARGET_TRIPLET=%VCPKG_TARGET_TRIPLET% -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake .
+
+test: off
