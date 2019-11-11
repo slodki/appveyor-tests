@@ -1,17 +1,17 @@
 version: '{build}'
 image:
-- Visual Studio 2017
+# - Visual Studio 2017
 - Visual Studio 2019
 configuration:
 - Release
-- Debug
+# - Debug
 platform:
 - x64
 - Win32
 
 environment:
   matrix:
-  - setenv: 0
+  # - setenv: 0
   - setenv: 1
 
 init:
@@ -21,7 +21,10 @@ init:
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- set > ..\env1.txt
 - if %setenv%==1 call "%vcvarsall%" %arch%
+- set > ..\env2.txt
+- fc ..\env1.txt ..\env2.txt || exit 0
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% %configuration% %arch%
 - cmake --version
