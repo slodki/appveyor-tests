@@ -15,10 +15,10 @@ environment:
 
 init:
 # Set developer command prompt
-- set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
-- set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
-- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-- call "%vcvarsall%" %arch%
+# - set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
+# - set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+# - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+# - call "%vcvarsall%" %arch%
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
 
