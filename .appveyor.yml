@@ -1,0 +1,29 @@
+version: '{build}'
+image:
+- Visual Studio 2019
+configuration:
+- Release
+- Debug
+platform:
+- x64
+- Win32
+
+environment:
+  CL: /MP
+  matrix:
+  - comp: 142
+
+init:
+# Set developer command prompt
+- set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
+- set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- call "%vcvarsall%" %arch%
+# Print some info
+- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
+
+build_script:
+- mkdir build & cd build
+- cmake -T v%comp%,host=x64 -G "Visual Studio 16 2019" -A %platform% .. || type CMakeFiles\3.15.5\VCTargetsPath.vcxproj
+- cmake --build . --target testbin --config %configuration%
+    -- /maxcpucount /verbosity:minimal /nologo /p:PreferredToolArchitecture=x64
