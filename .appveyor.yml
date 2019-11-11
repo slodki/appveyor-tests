@@ -15,6 +15,7 @@ environment:
   - setenv: 1
 
 init:
+- set "Platform="
 - echo "Platform before == %Platform%"
 # Set developer command prompt
 - if "%VS160COMNTOOLS%"=="" if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
