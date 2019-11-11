@@ -24,8 +24,8 @@ init:
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
 - if %setenv%==1 call "%vcvarsall%" %arch%
 - if %setenv%==1 echo Platform after == %Platform%
-- if %setenv%==1 if "%Platform%"=="x86" echo Platform changed == null
-- if %setenv%==1 if "%Platform%"=="x86" set "Platform="
+- if %setenv%==1 if "%Platform%"=="x86" echo Platform changed == Win32
+- if %setenv%==1 if "%Platform%"=="x86" set "Platform=Win32"
 - echo Platform final == %Platform%
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% %configuration% %arch%
