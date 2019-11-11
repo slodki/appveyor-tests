@@ -16,20 +16,18 @@ environment:
 
 init:
 - set "Platform="
-- echo "Platform before == %Platform%"
+- echo Platform before == %Platform%
 # Set developer command prompt
 - if "%VS160COMNTOOLS%"=="" if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
 - if "%VS150COMNTOOLS%"=="" if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-# - set > ..\env1.txt
 - if %setenv%==1 call "%vcvarsall%" %arch%
-# - set > ..\env2.txt
-# - fc ..\env1.txt ..\env2.txt || exit 0
-- if %setenv%==1 echo "Platform after == %Platform%"
-# - if %setenv%==1 if "%Platform%"=="x86" echo "Platform changed == null"
-# - if %setenv%==1 if "%Platform%"=="x86" set "Platform="
+- if %setenv%==1 echo Platform after == %Platform%
+- if %setenv%==1 if "%Platform%"=="x86" echo Platform changed == null
+- if %setenv%==1 if "%Platform%"=="x86" set "Platform="
+- echo Platform final == %Platform%
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% %configuration% %arch%
 # - cmake --version
