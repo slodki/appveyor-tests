@@ -27,8 +27,8 @@ init:
 # - set > ..\env2.txt
 # - fc ..\env1.txt ..\env2.txt || exit 0
 - if %setenv%==1 echo "Platform after == %Platform%"
-- if %setenv%==1 if "%Platform%"=="x86" echo "Platform changed == null"
-- if %setenv%==1 if "%Platform%"=="x86" set "Platform="
+# - if %setenv%==1 if "%Platform%"=="x86" echo "Platform changed == null"
+# - if %setenv%==1 if "%Platform%"=="x86" set "Platform="
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% %configuration% %arch%
 # - cmake --version
