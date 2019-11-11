@@ -16,8 +16,8 @@ environment:
 
 init:
 - set "Platform="
-- ps: remove-variable Platform
-- ps: remove-variable latform
+# - ps: remove-variable Platform
+- ps: remove-variable platform
 - echo Platform before == %Platform%
 # Set developer command prompt
 - if "%VS160COMNTOOLS%"=="" if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
