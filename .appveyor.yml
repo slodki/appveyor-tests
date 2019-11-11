@@ -1,5 +1,6 @@
 version: '{build}'
 image:
+- Visual Studio 2017
 - Visual Studio 2019
 configuration:
 - Release
@@ -9,22 +10,27 @@ platform:
 - Win32
 
 environment:
-  CL: /MP
   matrix:
-  - comp: 142
+  - setenv: 0
+  - setenv: 1
 
 init:
 # Set developer command prompt
-# - set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
-# - set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
-# - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-# - call "%vcvarsall%" %arch%
+- if "%VS160COMNTOOLS%"=="" if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "VS160COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\Common7\Tools\"
+- if "%VS150COMNTOOLS%"=="" if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
+- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
+- if %setenv%==1 call "%vcvarsall%" %arch%
 # Print some info
-- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp% %configuration% %arch%
+- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% %configuration% %arch%
+- cmake --version
 
 build_script:
 - mkdir build & cd build
-- cmake -T v%comp%,host=x64 -G "Visual Studio 16 2019" -A %platform% .. || exit 0
+- if %platform:~-2%==64 set "gen= Win64"
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" cmake -T host=x64 -G "Visual Studio 15 2017%gen%" .. || exit 0
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" cmake -T host=x64 -G "Visual Studio 16 2019" -A %platform% .. || exit 0
 - type CMakeFiles\3.15.5\VCTargetsPath.vcxproj
 - cmake --build . --target testbin --config %configuration%
     -- /maxcpucount /verbosity:minimal /nologo /p:PreferredToolArchitecture=x64
