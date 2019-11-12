@@ -9,11 +9,6 @@ platform:
 - x64
 - Win32
 
-environment:
-  matrix:
-  - setenv: 0
-  - setenv: 1
-
 init:
 - echo Platform before == %Platform%
 # Set developer command prompt
@@ -22,10 +17,7 @@ init:
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set "vcvarsall=%VS160COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
 - if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-- if %setenv%==1 call "%vcvarsall%" %arch%
-- if %setenv%==1 echo Platform after == %Platform%
-- if %setenv%==1 if "%Platform%"=="x86" echo Platform changed == Win32
-- if %setenv%==1 if "%Platform%"=="x86" set "Platform=Win32"
+- call "%vcvarsall%" %arch%
 - echo Platform final == %Platform%
 # Print some info
 - echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% %configuration% %arch%
@@ -34,8 +26,9 @@ init:
 build_script:
 - mkdir build & cd build
 - if %platform:~-2%==64 set "gen= Win64"
+- if %platform:~-2%==64 (set "cmakeplatf=x64") else (set "cmakeplatf=Win32")
 - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" cmake -T host=x64 -G "Visual Studio 15 2017%gen%" .. || exit 0
-- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" cmake -T host=x64 -G "Visual Studio 16 2019" -A %platform% .. || exit 0
+- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" cmake -T host=x64 -G "Visual Studio 16 2019" -A %cmakeplatf% .. || exit 0
 - type CMakeFiles\3.15.5\VCTargetsPath.vcxproj
 - cmake --build . --target testbin --config %configuration%
     -- /maxcpucount /verbosity:minimal /nologo /p:PreferredToolArchitecture=x64
