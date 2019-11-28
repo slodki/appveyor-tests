@@ -1,44 +1,18 @@
 version: '{build}'
-branches: { except: [ gh-pages ] }
 clone_depth: 10 # to allow queued build jobs
 image:
 - Visual Studio 2017
-configuration:
-- Release
-# - Debug
-platform:
-- x64
-
-matrix:
-  exclude:
-  # not installed
-  - { comp: 110, image: Visual Studio 2017 }
-  - { comp: 141, image: Visual Studio 2015 }
 
 environment:
   # Use cygwin embeded gettext tools
   path: '%path%;C:\cygwin64\bin'
-  # Microsoft toolchain options
-  msbuild_opts: /maxcpucount /verbosity:minimal /nologo /p:PreferredToolArchitecture=x64
-  CL: /MP
-  matrix:
-  - comp: 140
 
 init:
-# AppVeyor missing paths
-- if "%VS150COMNTOOLS%"=="" set "VS150COMNTOOLS=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\"
-# Set developer command prompt
-- if %platform:~-2%==64 (set arch=amd64) else (set arch=amd64_x86)
-- if %comp% LSS 120 if %platform:~-2%==64 (set arch=x86_amd64) else (set arch=x86)
-- call set "vcvarsall=%%VS%comp%COMNTOOLS%%..\..\VC\vcvarsall.bat"
-- if %comp%==141 set "vcvarsall=%VS150COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat"
-- call "%vcvarsall%" %arch%
-# Print some info
-- echo %APPVEYOR_BUILD_WORKER_IMAGE% %platform% v%comp%%xp% %configuration% %arch%
-# Patch CMake
-- for /d %%d in ("%ProgramFiles(x86)%\CMake\share\cmake-*") do
-    echo jestem w %%d
-- echo MESSAGE(dfsdf) | cmake -P "con:"
+- git clone https://github.com/DatavenueLiveObjects/Payload-decoders.git
 
-build: off
-test: off
+build:
+- cd Payload-decoders\lo-js-decoder-test-framework-samples
+- mvn clean install
+
+test:
+- mvn test
