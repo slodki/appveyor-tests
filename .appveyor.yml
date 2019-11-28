@@ -3,6 +3,9 @@ clone_depth: 10 # to allow queued build jobs
 image:
 - Visual Studio 2019
 - Ubuntu
+- macOS
+stack:
+- jdk 13
 
 init:
 - mvn --version
