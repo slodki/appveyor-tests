@@ -16,7 +16,7 @@ install:
 
 build_script:
 - cd Payload-decoders\lo-js-decoder-test-framework-samples
-- ps: (Get-Content pom.xml).replace('1\.2\.2', '1.2.3') | Set-Content pom.xml
+- ps: (Get-Content pom.xml).replace('1.2.2', '1.2.3') | Set-Content pom.xml
 - mvn clean install
 
 test_script:
