@@ -15,7 +15,7 @@ build_script:
 - cd Payload-decoders
 - cd lo-js-decoder-test-framework-samples
 - ps: (Get-Content pom.xml).replace('1.2.2', '1.2.3') | Set-Content pom.xml
-- mvn -X install
+- mvn -e install
 
 test_script:
-- mvn -X test
+- mvn -e test
