@@ -6,11 +6,10 @@ image:
 stack:
 - jdk 13
 
-init:
+install:
+- cmd: echo %JAVA_HOME%
 - cmd: set "JAVA_HOME=C:\Program Files\Java\jdk13"
 - mvn --version
-
-install:
 - git clone https://github.com/DatavenueLiveObjects/Payload-decoders.git
 - cmd: mvn install:install-file -Dfile="Payload-decoders\lib\lo-js-decoder-test-framework-utils-1.2.3-jar-with-dependencies.jar" -DgroupId="com.orange.lo" -DartifactId="lo-js-decoder-test-framework-utils" -Dversion="1.2.3" -Dpackaging="jar"
 - sh: mvn install:install-file -Dfile="Payload-decoders/lib/lo-js-decoder-test-framework-utils-1.2.3-jar-with-dependencies.jar" -DgroupId="com.orange.lo" -DartifactId="lo-js-decoder-test-framework-utils" -Dversion="1.2.3" -Dpackaging="jar"
