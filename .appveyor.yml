@@ -17,5 +17,5 @@ build_script:
 - cd Payload-decoders\lo-js-decoder-test-framework-samples
 - mvn clean install
 
-test:
+test_script:
 - mvn test
