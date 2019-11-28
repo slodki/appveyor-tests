@@ -1,11 +1,7 @@
 version: '{build}'
 clone_depth: 10 # to allow queued build jobs
 image:
-- Visual Studio 2017
-
-environment:
-  # Use cygwin embeded gettext tools
-  path: '%path%;C:\cygwin64\bin'
+- Visual Studio 2019
 
 init:
 - mvn --version
