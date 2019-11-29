@@ -4,17 +4,17 @@ clone_depth: 10 # to allow queued build jobs
 environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      JAVA_HOME: C:\Program Files\Java\jdk13
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      JAVA_HOME: C:\Program Files\Java\jdk12
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      JAVA_HOME: C:\Program Files\Java\jdk11
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      JAVA_HOME: C:\Program Files\Java\jdk10
+      JAVA_HOME: C:\Program Files\Java\jdk1.8.0
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       JAVA_HOME: C:\Program Files\Java\jdk9
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+      JAVA_HOME: C:\Program Files\Java\jdk10
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      JAVA_HOME: C:\Program Files\Java\jdk11
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      JAVA_HOME: C:\Program Files\Java\jdk12
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      JAVA_HOME: C:\Program Files\Java\jdk13
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
       JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
