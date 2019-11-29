@@ -3,22 +3,18 @@ clone_depth: 10 # to allow queued build jobs
 
 environment:
   matrix:
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      JAVA_HOME: C:\Program Files\Java\jdk13
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      JAVA_HOME: C:\Program Files\Java\jdk12
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      JAVA_HOME: C:\Program Files\Java\jdk11
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-#      JAVA_HOME: C:\Program Files\Java\jdk10
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-#      JAVA_HOME: C:\Program Files\Java\jdk9
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      JAVA_HOME: C:\Program Files\Java\jdk1.7.0
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
-      JAVA_HOME: /usr/lib/jvm/java-7-openjdk-amd64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      JAVA_HOME: C:\Program Files\Java\jdk13
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      JAVA_HOME: C:\Program Files\Java\jdk12
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      JAVA_HOME: C:\Program Files\Java\jdk11
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      JAVA_HOME: C:\Program Files\Java\jdk10
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      JAVA_HOME: C:\Program Files\Java\jdk9
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      JAVA_HOME: C:\Program Files\Java\jdk1.8.0
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
       JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
@@ -35,14 +31,14 @@ environment:
       JAVA_HOME: /usr/lib/jvm/java-14-openjdk-amd64
 
 install:
-- sh: ls -l /usr/lib/jvm
 - mvn --version
 - git clone https://github.com/DatavenueLiveObjects/Payload-decoders.git
-- cmd: mvn install:install-file -Dfile="Payload-decoders\lib\lo-js-decoder-test-framework-utils-1.2.3-jar-with-dependencies.jar" -DgroupId="com.orange.lo" -DartifactId="lo-js-decoder-test-framework-utils" -Dversion="1.2.3" -Dpackaging="jar"
-- sh: mvn install:install-file -Dfile="Payload-decoders/lib/lo-js-decoder-test-framework-utils-1.2.3-jar-with-dependencies.jar" -DgroupId="com.orange.lo" -DartifactId="lo-js-decoder-test-framework-utils" -Dversion="1.2.3" -Dpackaging="jar"
+- cd Payload-decoders
+- cd lib
+- mvn install:install-file -Dfile="lo-js-decoder-test-framework-utils-1.2.3-jar-with-dependencies.jar" -DgroupId="com.orange.lo" -DartifactId="lo-js-decoder-test-framework-utils" -Dversion="1.2.3" -Dpackaging="jar"
 
 build_script:
-- cd Payload-decoders
+- cd ..
 - cd lo-js-decoder-test-framework-samples
 - ps: (Get-Content pom.xml).replace('1.2.2', '1.2.3').replace('1.16.10', '1.16.22') | Set-Content pom.xml
 - mvn install
